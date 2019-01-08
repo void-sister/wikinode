@@ -33,6 +33,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+//set public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 //home route
 app.get('/', function(req, res){
   // res.send('Hello world');
@@ -46,6 +49,15 @@ app.get('/', function(req, res){
         articles: articles
       });
     }
+  });
+});
+
+//get single article
+app.get('/article/:id', function(req, res){
+  Article.findById(req.params.id, function(err, article){
+    res.render('article', {
+      article:article
+    });
   });
 });
 
